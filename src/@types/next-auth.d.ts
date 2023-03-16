@@ -7,9 +7,9 @@ declare module 'next-auth' {
     name: string
     email: string
     username: string
-    specialty: string
-    subspecialty: string
-    stripe_customer_id: string
+    specialty: string | null | undefined
+    subspecialty: string | null | undefined
+    stripe_customer_id: string | null | undefined
     avatar_url: string
   }
 
