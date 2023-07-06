@@ -1,11 +1,5 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  reactStrictMode: true,
-  swcMinify: true,
-  pageExtensions: ['page.tsx', 'api.ts', 'api.tsx'],
-  images: {
-    domains: ['https://lh3.googleusercontent.com/'],
-  },
   source: '/src/pages/api/:path*',
   headers: [
     { key: 'Access-Control-Allow-Credentials', value: 'true' },
@@ -20,6 +14,12 @@ const nextConfig = {
         'X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version',
     },
   ],
+  reactStrictMode: true,
+  swcMinify: true,
+  pageExtensions: ['page.tsx', 'api.ts', 'api.tsx'],
+  images: {
+    domains: ['https://lh3.googleusercontent.com/'],
+  },
 }
 
 module.exports = nextConfig
