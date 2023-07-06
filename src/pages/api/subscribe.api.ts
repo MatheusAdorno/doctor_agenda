@@ -74,7 +74,7 @@ export default async function handler(
       })
     }
 
-    return res.status(200).json({ checkoutUrl: stripeCheckoutSession.url })
+    return res.status(200).json({ sessionId: stripeCheckoutSession.id })
   } else {
     res.setHeader('Allow', 'POST')
     res.status(405).end('Method not allowed')
