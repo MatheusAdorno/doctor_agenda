@@ -6,7 +6,7 @@ const nextConfig = {
   images: {
     domains: ['https://lh3.googleusercontent.com/'],
   },
-  source: '/api/:path*',
+  source: '/src/pages/api/:path*',
   headers: [
     { key: 'Access-Control-Allow-Credentials', value: 'true' },
     { key: 'Access-Control-Allow-Origin', value: '*' },
@@ -20,6 +20,7 @@ const nextConfig = {
         'X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version',
     },
   ],
+  async headers
 }
 
 module.exports = nextConfig
