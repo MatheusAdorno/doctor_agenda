@@ -28,6 +28,7 @@
     "next-seo": "^5.15.0",
     "nookies": "^2.5.2",
     "phosphor-react": "^1.4.1",
+    "raw-body": "^2.5.2",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-hook-form": "^7.43.2",
