@@ -70,10 +70,6 @@ export function CalendarStep({
       .set('second', 0)
       .toDate()
 
-    console.log(hour)
-    console.log(Math.round(hour))
-    console.log(dateWithTime)
-
     onSelectDateTime(dateWithTime)
   }
 
