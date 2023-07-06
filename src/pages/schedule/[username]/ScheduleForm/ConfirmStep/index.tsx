@@ -91,9 +91,9 @@ export function ConfirmStep({
       </label>
 
       <label>
-        <Text size="sm">
-          Número de celular <Text size={'sm'}>Formato: (dd)xxxxx-yyyy</Text>
-        </Text>
+        <ObservationText size="sm">
+          Número de celular <span>(dd)xxxxx-yyyy</span>
+        </ObservationText>
         <TextInput
           type="tel"
           placeholder="Seu WhatsApp"

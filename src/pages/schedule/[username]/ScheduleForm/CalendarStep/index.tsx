@@ -66,8 +66,13 @@ export function CalendarStep({
   function handleSelectTime(hour: number) {
     const dateWithTime = dayjs(selectedDate)
       .set('hour', hour)
-      .set('minute', (hour - Math.floor(hour)) * 60)
+      .set('minute', Math.round((hour - Math.floor(hour)) * 60))
+      .set('second', 0)
       .toDate()
+
+    console.log(hour)
+    console.log(Math.round(hour))
+    console.log(dateWithTime)
 
     onSelectDateTime(dateWithTime)
   }

@@ -103,8 +103,31 @@ export default async function handle(
     const isTimeBlocked = blockedTimes.some(
       (blockedTime) =>
         blockedTime.date.getHours() === Math.floor(time) &&
-        blockedTime.date.getMinutes() / 60 === time - Math.floor(time),
+        blockedTime.date.getMinutes() ===
+          Math.round((time - Math.floor(time)) * 60),
+      // blockedTime.date.getHours() === Math.floor(time) &&
+      // blockedTime.date.getMinutes() / 60 === time - Math.floor(time),
     )
+    // console.log('Hour Blocked:' + blockedTimes[0].date.getHours())
+    // console.log('Time: ' + Math.floor(time))
+    // console.log('Minutes Blocked:' + blockedTimes[0].date.getMinutes())
+    // console.log('Minutes:' + [Math.round((time - Math.floor(time)) * 60)])
+    // console.log(
+    //   'Minutes is Equal: ' +
+    //     [
+    //       blockedTimes[0].date.getMinutes() ===
+    //         Math.round((time - Math.floor(time)) * 60),
+    //     ],
+    // )
+    // console.log(
+    //   'Time is Equal: ' +
+    //     [
+    //       blockedTimes[0].date.getHours() === Math.floor(time) &&
+    //         blockedTimes[0].date.getMinutes() ===
+    //           Math.round((time - Math.floor(time)) * 60),
+    //     ],
+    // )
+    // console.log('________________')
 
     const minutes = (time - Math.floor(time)) * 60
 
