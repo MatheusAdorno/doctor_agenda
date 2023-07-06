@@ -150,7 +150,7 @@ export default function TimeIntervals() {
   function copyLinkToClipboard() {
     navigator.clipboard.writeText(
       // Mudar link quando for para produção
-      `http://localhost:3000/schedule/${String(router.query.username)}`,
+      `http://doctoragenda.app/schedule/${String(router.query.username)}`,
     )
 
     window.scrollTo(0, 0)

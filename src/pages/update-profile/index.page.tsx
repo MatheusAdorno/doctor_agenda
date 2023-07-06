@@ -165,7 +165,7 @@ export default function UpdateProfile({
   function copyLinkToClipboard() {
     navigator.clipboard.writeText(
       // Mudar link quando for para produção
-      `http://localhost:3000/schedule/${usernameAfterUpdateProfile}`,
+      `http://doctoragenda.app/schedule/${usernameAfterUpdateProfile}`,
     )
 
     window.scrollTo(0, 0)
