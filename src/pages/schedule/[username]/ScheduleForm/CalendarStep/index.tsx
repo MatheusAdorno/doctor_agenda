@@ -63,6 +63,8 @@ export function CalendarStep({
     },
   )
 
+  const userTimeZone = new Date().getTimezoneOffset() / 60
+
   function handleSelectTime(hour: number) {
     const dateWithTime = dayjs(selectedDate)
       .set('hour', hour)
@@ -105,7 +107,7 @@ export function CalendarStep({
                     onClick={() => handleSelectTime(hour)}
                     disabled={!availability.availableTimes.includes(hour)}
                   >
-                    {String(Math.floor(hour)).padStart(2, '0')}:
+                    {String(Math.floor(hour + userTimeZone)).padStart(2, '0')}:
                     {String(
                       Math.round((hour - Math.floor(hour)) * 60),
                     ).padStart(2, '0')}
