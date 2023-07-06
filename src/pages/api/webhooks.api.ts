@@ -31,7 +31,7 @@ export default async function handler(
   res: NextApiResponse,
 ) {
   if (req.method === 'POST') {
-    const buf = await buffer(req.body)
+    const buf = await buffer(req)
     const secret = req.headers['stripe-signature']
 
     let event: Stripe.Event
