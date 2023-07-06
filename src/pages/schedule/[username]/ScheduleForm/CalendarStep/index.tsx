@@ -107,7 +107,7 @@ export function CalendarStep({
                     onClick={() => handleSelectTime(hour)}
                     disabled={!availability.availableTimes.includes(hour)}
                   >
-                    {String(Math.floor(hour + userTimeZone)).padStart(2, '0')}:
+                    {String(Math.floor(hour - userTimeZone)).padStart(2, '0')}:
                     {String(
                       Math.round((hour - Math.floor(hour)) * 60),
                     ).padStart(2, '0')}
