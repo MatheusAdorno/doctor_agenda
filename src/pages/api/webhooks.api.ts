@@ -1,8 +1,18 @@
 import { stripe } from '@/lib/stripe'
 import { NextApiRequest, NextApiResponse } from 'next'
+import { Readable } from 'stream'
 import Stripe from 'stripe'
 import { saveSubscription } from './_lib/manageSubscription'
-import getRawBody from 'raw-body'
+
+async function buffer(readable: Readable) {
+  const chunks = []
+
+  for await (const chunk of readable) {
+    chunks.push(typeof chunk === 'string' ? Buffer.from(chunk) : chunk)
+  }
+
+  return Buffer.concat(chunks)
+}
 
 export const config = {
   api: {
@@ -22,7 +32,7 @@ export default async function handler(
 ) {
   if (req.method === 'POST') {
     const secret = req.headers['stripe-signature']
-    const buf = await getRawBody(req)
+    const buf = await buffer(req)
 
     let event: Stripe.Event
 
