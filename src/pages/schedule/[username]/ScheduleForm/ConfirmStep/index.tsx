@@ -64,14 +64,16 @@ export function ConfirmStep({
       name,
       cellNumber,
       observations,
-      date: schedulingDate.setHours(schedulingDate.getHours() + userTimeZone),
+      date: schedulingDate,
     })
 
     onConfirmSchedule()
   }
 
   const describedDate = dayjs(schedulingDate).format('DD[ de ]MMMM[ de ]YYYY')
-  const describedTime = dayjs(schedulingDate).format('HH:mm[h]')
+  const describedTime = dayjs(
+    schedulingDate.setHours(schedulingDate.getHours() - userTimeZone),
+  ).format('HH:mm[h]')
 
   return (
     <ConfirmForm as="form" onSubmit={handleSubmit(handleConfirmScheduling)}>
