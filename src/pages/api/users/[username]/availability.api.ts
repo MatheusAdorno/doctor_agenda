@@ -52,22 +52,22 @@ export default async function handle(
   const startHour = time_start_in_minutes / 60
   const endHour = time_end_in_minutes / 60
 
-  const moduleStartHour = time_start_in_minutes % 60
-  const moduleEndHour = time_start_in_minutes % 60
+  // const moduleStartHour = time_start_in_minutes % 60
+  // const moduleEndHour = time_start_in_minutes % 60
 
-  let decimalPartStartHour = 0
-  let decimalPartEndHour = 0
+  // let decimalPartStartHour = 0
+  // let decimalPartEndHour = 0
 
-  if (moduleStartHour !== 0) {
-    decimalPartStartHour = startHour - Math.floor(startHour)
-  }
+  // if (moduleStartHour !== 0) {
+  //   decimalPartStartHour = startHour - Math.floor(startHour)
+  // }
 
-  if (moduleEndHour !== 0) {
-    decimalPartEndHour = endHour - Math.floor(endHour)
-  }
+  // if (moduleEndHour !== 0) {
+  //   decimalPartEndHour = endHour - Math.floor(endHour)
+  // }
 
-  const startMinutes = decimalPartStartHour * 60
-  const endMinutes = decimalPartEndHour * 60
+  // const startMinutes = decimalPartStartHour * 60
+  // const endMinutes = decimalPartEndHour * 60
 
   const appointmentTimeInfluenceInPossibleTimesLength = 60 / appointment_time
   const possibleTimesLength = Math.floor(
@@ -80,6 +80,25 @@ export default async function handle(
     },
   )
 
+  // const blockedTimes = await prisma.scheduling.findMany({
+  //   select: {
+  //     date: true,
+  //   },
+  //   where: {
+  //     user_id: user.id,
+  //     date: {
+  //       gte: referenceDate
+  //         .set('hour', startHour)
+  //         .set('minute', startMinutes)
+  //         .toDate(),
+  //       lte: referenceDate
+  //         .set('hour', endHour)
+  //         .set('minute', endMinutes)
+  //         .toDate(),
+  //     },
+  //   },
+  // })
+
   const blockedTimes = await prisma.scheduling.findMany({
     select: {
       date: true,
@@ -87,57 +106,35 @@ export default async function handle(
     where: {
       user_id: user.id,
       date: {
-        gte: referenceDate
-          .set('hour', startHour)
-          .set('minute', startMinutes)
-          .toDate(),
-        lte: referenceDate
-          .set('hour', endHour)
-          .set('minute', endMinutes)
-          .toDate(),
+        gte: referenceDate.startOf('day').toDate(),
+        lte: referenceDate.endOf('day').toDate(),
       },
     },
   })
 
-  const availableTimes = possibleTimes.filter((time) => {
-    const isTimeBlocked = blockedTimes.some(
-      (blockedTime) =>
-        blockedTime.date.getHours() === Math.floor(time) &&
-        blockedTime.date.getMinutes() ===
-          Math.round((time - Math.floor(time)) * 60),
-      // blockedTime.date.getHours() === Math.floor(time) &&
-      // blockedTime.date.getMinutes() / 60 === time - Math.floor(time),
-    )
-    // console.log('Hour Blocked:' + blockedTimes[0].date.getHours())
-    // console.log('Time: ' + Math.floor(time))
-    // console.log('Minutes Blocked:' + blockedTimes[0].date.getMinutes())
-    // console.log('Minutes:' + [Math.round((time - Math.floor(time)) * 60)])
-    // console.log(
-    //   'Minutes is Equal: ' +
-    //     [
-    //       blockedTimes[0].date.getMinutes() ===
-    //         Math.round((time - Math.floor(time)) * 60),
-    //     ],
-    // )
-    // console.log(
-    //   'Time is Equal: ' +
-    //     [
-    //       blockedTimes[0].date.getHours() === Math.floor(time) &&
-    //         blockedTimes[0].date.getMinutes() ===
-    //           Math.round((time - Math.floor(time)) * 60),
-    //     ],
-    // )
-    // console.log('________________')
-
-    const minutes = (time - Math.floor(time)) * 60
-
-    const isTimeInPast = referenceDate
-      .set('hour', time)
-      .set('minute', minutes)
-      .isBefore(new Date())
-
-    return !isTimeBlocked && !isTimeInPast
+  const availableTimes = blockedTimes.map((schedules) => {
+    return schedules.date
   })
+
+  // const availableTimes = possibleTimes.filter((time) => {
+  //   const isTimeBlocked = blockedTimes.some(
+  //     (blockedTime) =>
+  //       blockedTime.date.getHours() === Math.floor(time) &&
+  //       blockedTime.date.getMinutes() ===
+  //         Math.round((time - Math.floor(time)) * 60),
+  //     // blockedTime.date.getHours() === Math.floor(time) &&
+  //     // blockedTime.date.getMinutes() / 60 === time - Math.floor(time),
+  //   )
+
+  //   const minutes = (time - Math.floor(time)) * 60
+
+  //   const isTimeInPast = referenceDate
+  //     .set('hour', time)
+  //     .set('minute', minutes)
+  //     .isBefore(new Date())
+
+  //   return !isTimeBlocked && !isTimeInPast
+  // })
 
   return res.json({
     possibleTimes,

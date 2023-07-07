@@ -47,7 +47,7 @@ export function CalendarStep({
     ? dayjs(selectedDate).format('YYYY-MM-DD')
     : null
 
-  const userTimeZone = new Date().getTimezoneOffset() / 60
+  // const userTimeZone = new Date().getTimezoneOffset() / 60
 
   const { data: availability } = useQuery<Availability>(
     ['availability', selectedDateWithoutTime],
@@ -65,17 +65,16 @@ export function CalendarStep({
     },
   )
 
+  const unavailableTimes = availability?.availableTimes.map((availableTime) => {
+    return dayjs(availableTime).get('hour')
+  })
+
   function handleSelectTime(hour: number) {
     const dateWithTime = dayjs(selectedDate)
       .set('hour', hour)
       .set('minute', Math.round((hour - Math.floor(hour)) * 60))
       .set('second', 0)
       .toDate()
-
-    const sumTime = hour - userTimeZone
-    console.log('hour ' + hour)
-    console.log('hour - timezone ' + sumTime)
-    console.log('-+ ' + (hour -= userTimeZone))
 
     onSelectDateTime(dateWithTime)
   }
@@ -111,9 +110,8 @@ export function CalendarStep({
                     key={hour}
                     onClick={() => handleSelectTime(hour)}
                     disabled={
-                      !availability.availableTimes.includes(
-                        (hour -= userTimeZone),
-                      )
+                      unavailableTimes?.includes(hour) ||
+                      dayjs(selectedDate).set('hour', hour).isBefore(new Date())
                     }
                   >
                     {String(Math.floor(hour)).padStart(2, '0')}:
