@@ -72,6 +72,9 @@ export function CalendarStep({
       .set('second', 0)
       .toDate()
 
+    console.log('hour' + hour)
+    console.log('hour + timezone' + hour + userTimeZone)
+
     onSelectDateTime(dateWithTime)
   }
 
