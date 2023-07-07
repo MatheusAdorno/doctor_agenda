@@ -64,7 +64,7 @@ export function ConfirmStep({
       name,
       cellNumber,
       observations,
-      date: schedulingDate.setHours(schedulingDate.getHours() - userTimeZone),
+      date: schedulingDate.setHours(schedulingDate.getHours() + userTimeZone),
     })
 
     onConfirmSchedule()
