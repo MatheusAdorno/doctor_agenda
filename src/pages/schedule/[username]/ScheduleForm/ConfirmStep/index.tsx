@@ -52,7 +52,7 @@ export function ConfirmStep({
     resolver: zodResolver(confirmFormSchema),
   })
 
-  const userTimeZone = new Date().getTimezoneOffset() / 60
+  // const userTimeZone = new Date().getTimezoneOffset() / 60
 
   const router = useRouter()
   const username = String(router.query.username)
@@ -72,7 +72,7 @@ export function ConfirmStep({
 
   const describedDate = dayjs(schedulingDate).format('DD[ de ]MMMM[ de ]YYYY')
   const describedTime = dayjs(
-    schedulingDate.setHours(schedulingDate.getHours() - userTimeZone),
+    schedulingDate.setHours(schedulingDate.getHours()),
   ).format('HH:mm[h]')
 
   return (
