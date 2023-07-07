@@ -52,8 +52,6 @@ export function ConfirmStep({
     resolver: zodResolver(confirmFormSchema),
   })
 
-  // const userTimeZone = new Date().getTimezoneOffset() / 60
-
   const router = useRouter()
   const username = String(router.query.username)
 

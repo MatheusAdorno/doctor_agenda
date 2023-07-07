@@ -47,6 +47,8 @@ export function CalendarStep({
     ? dayjs(selectedDate).format('YYYY-MM-DD')
     : null
 
+  const userTimeZone = new Date().getTimezoneOffset() / 60
+
   const { data: availability } = useQuery<Availability>(
     ['availability', selectedDateWithoutTime],
     async () => {
@@ -103,7 +105,9 @@ export function CalendarStep({
                   <TimePickerItem
                     key={hour}
                     onClick={() => handleSelectTime(hour)}
-                    disabled={!availability.availableTimes.includes(hour)}
+                    disabled={
+                      !availability.availableTimes.includes(hour + userTimeZone)
+                    }
                   >
                     {String(Math.floor(hour)).padStart(2, '0')}:
                     {String(
