@@ -72,8 +72,8 @@ export function CalendarStep({
       .set('second', 0)
       .toDate()
 
-    console.log('hour' + hour)
-    console.log('hour + timezone' + hour + userTimeZone)
+    console.log('hour ' + hour)
+    console.log('hour + timezone ' + Number(hour) + Number(userTimeZone))
 
     onSelectDateTime(dateWithTime)
   }
@@ -109,7 +109,9 @@ export function CalendarStep({
                     key={hour}
                     onClick={() => handleSelectTime(hour)}
                     disabled={
-                      !availability.availableTimes.includes(hour + userTimeZone)
+                      !availability.availableTimes.includes(
+                        Number(hour) + Number(userTimeZone),
+                      )
                     }
                   >
                     {String(Math.floor(hour)).padStart(2, '0')}:
