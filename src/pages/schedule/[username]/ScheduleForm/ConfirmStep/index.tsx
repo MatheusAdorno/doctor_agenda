@@ -52,6 +52,8 @@ export function ConfirmStep({
     resolver: zodResolver(confirmFormSchema),
   })
 
+  const userTimeZone = new Date().getTimezoneOffset() / 60
+
   const router = useRouter()
   const username = String(router.query.username)
 
@@ -62,7 +64,7 @@ export function ConfirmStep({
       name,
       cellNumber,
       observations,
-      date: schedulingDate,
+      date: schedulingDate.setHours(schedulingDate.getHours() - userTimeZone),
     })
 
     onConfirmSchedule()
