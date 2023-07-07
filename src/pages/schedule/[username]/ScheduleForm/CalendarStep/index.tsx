@@ -72,8 +72,9 @@ export function CalendarStep({
       .set('second', 0)
       .toDate()
 
+    const sumTime = hour + userTimeZone
     console.log('hour ' + hour)
-    console.log('hour + timezone ' + Number(hour) + Number(userTimeZone))
+    console.log('hour + timezone ' + sumTime)
 
     onSelectDateTime(dateWithTime)
   }
