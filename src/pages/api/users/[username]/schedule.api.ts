@@ -87,6 +87,8 @@ export default async function handle(
   })
 
   const scheduleDay = schedulingDate.date()
+  const scheduleMonth = schedulingDate.month()
+  const scheduleYear = schedulingDate.year()
   let scheduleMinutes = schedulingDate.minute() + appointmentInterval
   let scheduleHours = schedulingDate.hour()
 
@@ -98,6 +100,8 @@ export default async function handle(
 
   const finalEndDateTime = dayjs()
     .date(scheduleDay)
+    .month(scheduleMonth)
+    .year(scheduleYear)
     .hour(scheduleHours)
     .minute(scheduleMinutes)
 
