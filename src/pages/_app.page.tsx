@@ -9,7 +9,7 @@ import { DefaultSeo } from 'next-seo'
 
 globalStyles()
 
-export default function App({
+export function App({
   Component,
   pageProps: { session, ...pageProps },
 }: AppProps) {
