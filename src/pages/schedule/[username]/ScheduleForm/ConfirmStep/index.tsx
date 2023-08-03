@@ -55,6 +55,8 @@ export function ConfirmStep({
   const router = useRouter()
   const username = String(router.query.username)
 
+  const userTimeZone = new Date().getTimezoneOffset() / 60
+
   async function handleConfirmScheduling(data: ConfirmFormData) {
     const { name, cellNumber, observations } = data
 
@@ -63,6 +65,7 @@ export function ConfirmStep({
       cellNumber,
       observations,
       date: schedulingDate,
+      userTimeZone,
     })
 
     onConfirmSchedule()

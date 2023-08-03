@@ -30,6 +30,7 @@ export default async function handle(
     cellNumber: z.string(),
     observations: z.string(),
     date: z.string().datetime(),
+    userTimeZone: z.number(),
   })
 
   const appointment = await prisma.userTimeInterval.findFirst({
@@ -46,9 +47,8 @@ export default async function handle(
 
   const appointmentInterval = appointment.appointment_time
 
-  const { name, cellNumber, observations, date } = createSchedulingBody.parse(
-    req.body,
-  )
+  const { name, cellNumber, observations, date, userTimeZone } =
+    createSchedulingBody.parse(req.body)
 
   const schedulingDate = dayjs(date)
 
@@ -76,7 +76,7 @@ export default async function handle(
       name,
       cellNumber,
       observations,
-      date: schedulingDate.toDate(),
+      date: schedulingDate.subtract(userTimeZone, 'hour').toDate(),
       user_id: user.id,
     },
   })
