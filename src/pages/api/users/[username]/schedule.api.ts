@@ -27,6 +27,7 @@ export default async function handle(
 
   const createSchedulingBody = z.object({
     name: z.string(),
+    email: z.string(),
     cellNumber: z.string(),
     observations: z.string(),
     date: z.string().datetime(),
@@ -47,7 +48,7 @@ export default async function handle(
 
   const appointmentInterval = appointment.appointment_time
 
-  const { name, cellNumber, observations, date, userTimeZone } =
+  const { name, email, cellNumber, observations, date, userTimeZone } =
     createSchedulingBody.parse(req.body)
 
   const schedulingDate = dayjs(date)
@@ -74,6 +75,7 @@ export default async function handle(
   await prisma.scheduling.create({
     data: {
       name,
+      email,
       cellNumber,
       observations,
       date: schedulingDate.subtract(userTimeZone, 'hour').toDate(),
@@ -109,7 +111,7 @@ export default async function handle(
     calendarId: 'primary',
     requestBody: {
       summary: `Doctor Agenda: ${name}`,
-      description: `Número de celular: ${cellNumber} \nObservações: ${observations}`,
+      description: `Email: ${email} \nNúmero de celular: ${cellNumber} \nObservações: ${observations}`,
       start: {
         dateTime: schedulingDate.format(),
       },
