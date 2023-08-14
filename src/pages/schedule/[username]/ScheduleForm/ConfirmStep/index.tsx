@@ -19,9 +19,6 @@ const confirmFormSchema = z.object({
   name: z
     .string()
     .min(3, { message: 'O nome precisa ter no mínimo 3 caracteres.' }),
-  email: z
-    .string()
-    .email({ message: 'O E-mail precisa ser um endereço de e-mail válido.' }),
   cellNumber: z
     .string()
     .min(11, {
@@ -61,11 +58,10 @@ export function ConfirmStep({
   const userTimeZone = new Date().getTimezoneOffset() / 60
 
   async function handleConfirmScheduling(data: ConfirmFormData) {
-    const { name, email, cellNumber, observations } = data
+    const { name, cellNumber, observations } = data
 
     await api.post(`/users/${username}/schedule`, {
       name,
-      email,
       cellNumber,
       observations,
       date: schedulingDate,
@@ -97,14 +93,6 @@ export function ConfirmStep({
         <Text size="sm">Nome completo</Text>
         <TextInput placeholder="Seu nome" {...register('name')} />
         {errors.name && <FormError size="sm">{errors.name.message}</FormError>}
-      </label>
-
-      <label>
-        <Text size="sm">E-mail</Text>
-        <TextInput placeholder="Seu E-mail" {...register('email')} />
-        {errors.email && (
-          <FormError size="sm">{errors.email.message}</FormError>
-        )}
       </label>
 
       <label>
