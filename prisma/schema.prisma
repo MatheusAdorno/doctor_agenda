@@ -89,6 +89,7 @@ model UserTimeInterval {
 model Scheduling {
   id           String   @id @default(uuid())
   date         DateTime
+  email        String?
   name         String
   cellNumber   String
   observations String?

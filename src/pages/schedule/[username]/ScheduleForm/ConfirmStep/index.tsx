@@ -28,7 +28,12 @@ const confirmFormSchema = z.object({
       message:
         'Digite o número de celular seguindo o formato correto. Ex: (11)99999-9999',
     }),
-  observations: z.string().nullable(),
+  observations: z
+    .string()
+    .max(100, {
+      message: 'O campo observação precisa ter no máximo 100 caracteres.',
+    })
+    .nullable(),
 })
 
 type ConfirmFormData = z.infer<typeof confirmFormSchema>
@@ -116,6 +121,9 @@ export function ConfirmStep({
           </>
         </ObservationText>
         <TextArea {...register('observations')} />
+        {errors.observations && (
+          <FormError size="sm">{errors.observations.message}</FormError>
+        )}
       </label>
 
       <FormActions>
