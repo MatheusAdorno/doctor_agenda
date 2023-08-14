@@ -43,7 +43,7 @@ const updateProfileSchema = z.object({
     .string()
     .min(3, { message: 'O usuário precisa ter pelo menos três letras.' })
     .regex(/^([a-z\\-]+)$/i, {
-      message: 'O usuário precisa ter apenas letras e hifens.',
+      message: 'O usuário precisa ter apenas letras e hifen.',
     })
     .transform((username) => username.toLowerCase()),
   name: z
