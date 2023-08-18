@@ -45,8 +45,9 @@ export default async function handle(
     SELECT 
       EXTRACT(DAY FROM S.date) AS date,
       COUNT(S.date) AS amount,
-      ((((UTI.time_end_in_minutes - UTI.time_start_in_minutes) / 60)) * (60 / UTI.appointment_time)) AS size
-
+      ((((UTI.time_end_in_minutes - UTI.time_start_in_minutes) / 60)) * (60 / UTI.appointment_time)) AS size,
+      (((UTI.time_end_in_minutes - UTI.time_start_in_minutes) / 60)) AS gap,
+      (60 / UTI.appointment_time) AS gaptwo
 
     FROM schedulings S
 
@@ -57,8 +58,9 @@ export default async function handle(
       AND DATE_FORMAT(S.date, "%Y-%m") = ${`${year}-${month}`}
 
     GROUP BY EXTRACT(DAY FROM S.date), 
-    ((((UTI.time_end_in_minutes - UTI.time_start_in_minutes) / 60)) * (60 / UTI.appointment_time))
-
+    ((((UTI.time_end_in_minutes - UTI.time_start_in_minutes) / 60)) * (60 / UTI.appointment_time)),
+    (((UTI.time_end_in_minutes - UTI.time_start_in_minutes) / 60)),
+    (60 / UTI.appointment_time)
     HAVING amount >= size
   `
   console.log(blockedDatesRaw)
