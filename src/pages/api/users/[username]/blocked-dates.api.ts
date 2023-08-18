@@ -48,6 +48,7 @@ export default async function handle(
       ((((UTI.time_end_in_minutes - UTI.time_start_in_minutes) / 60)) * (60 / UTI.appointment_time)) AS size,
       (((UTI.time_end_in_minutes - UTI.time_start_in_minutes))) AS gap,
       (UTI.time_end_in_minutes) AS utiend
+      (UTI.time_start_in_minutes) AS utistart
 
     FROM schedulings S
 
@@ -61,6 +62,7 @@ export default async function handle(
     ((((UTI.time_end_in_minutes - UTI.time_start_in_minutes) / 60)) * (60 / UTI.appointment_time)),
     (((UTI.time_end_in_minutes - UTI.time_start_in_minutes))),
     (UTI.time_end_in_minutes)
+    (UTI.time_start_in_minutes)
     HAVING amount >= size
   `
   console.log(blockedDatesRaw)
