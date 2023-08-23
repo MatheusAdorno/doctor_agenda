@@ -45,10 +45,7 @@ export default async function handle(
     SELECT 
       EXTRACT(DAY FROM S.date) AS date,
       COUNT(S.date) AS amount,
-      ((((UTI.time_end_in_minutes - UTI.time_start_in_minutes) / 60)) * (60 / UTI.appointment_time)) AS size,
-      (((UTI.time_end_in_minutes - UTI.time_start_in_minutes))) AS gap,
-      (UTI.time_end_in_minutes) AS utiend,
-      (UTI.time_start_in_minutes) AS utistart
+      ((((UTI.time_end_in_minutes - UTI.time_start_in_minutes) / 60)) * (60 / UTI.appointment_time)) AS size
 
     FROM schedulings S
 
@@ -56,17 +53,14 @@ export default async function handle(
       ON UTI.week_day = WEEKDAY(DATE_ADD(S.date, INTERVAL 1 DAY))
 
     WHERE S.user_id = ${user.id}
+      AND UTI.user_id = ${user.id}
       AND DATE_FORMAT(S.date, "%Y-%m") = ${`${year}-${month}`}
 
     GROUP BY EXTRACT(DAY FROM S.date), 
-    ((((UTI.time_end_in_minutes - UTI.time_start_in_minutes) / 60)) * (60 / UTI.appointment_time)),
-    (((UTI.time_end_in_minutes - UTI.time_start_in_minutes))),
-    (UTI.time_end_in_minutes),
-    (UTI.time_start_in_minutes)
+    ((((UTI.time_end_in_minutes - UTI.time_start_in_minutes) / 60)) * (60 / UTI.appointment_time))
+    
     HAVING amount >= size
   `
-  console.log(blockedDatesRaw)
-
   const blockedDates = blockedDatesRaw.map((item) => item.date)
 
   return res.json({ blockedWeekDays, blockedDates })
