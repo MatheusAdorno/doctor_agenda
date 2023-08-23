@@ -136,7 +136,7 @@ export default async function handle(
     const minutes = (time - Math.floor(time)) * 60
 
     const isTimeInPast = referenceDate
-      .set('hour', time - Number(userTimeZone))
+      .set('hour', time + Number(userTimeZone))
       .set('minute', minutes)
       .isBefore(new Date())
 
